@@ -28,6 +28,6 @@ document.querySelector('.btn').addEventListener('click',function(){
             body:"studentId="+roll_no+"&password=Test123!!&confirmPassword=Test123!!"
     })
     
-    document.querySelector('.desc').textContent = "Password has been changed for user "+roll_no+" if it exists. The new password is - Test123!!\nThe user belonged to "+domain;
+    document.querySelector('.desc').textContent = "Password has been changed for user "+roll_no+" if it exists.\nThe new password is - Test123!!\nThe user belonged to "+domain;
 
 })
