@@ -1,28 +1,37 @@
-<html>
-  <body>
-       <script>
-         var xhr = new XMLHttpRequest();
-var url = 'https://o8xcj6uduzxopxh3ah4w3rqzcqig65.oastify.com/confirmed';
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Redirect Timer</title>
+</head>
+<body>
 
-// Set up the request
-xhr.open('GET', url, true);
+<div id="timer">Redirecting in 5 seconds...</div>
 
-// Set up event listeners to handle the response
-xhr.onreadystatechange = function () {
-  if (xhr.readyState === 4) {
-    if (xhr.status === 200) {
-      // Request was successful, handle the response
-      console.log('Response:', xhr.responseText);
-    } else {
-      // Request failed
-      console.error('Request failed with status:', xhr.status);
+<script>
+    // Set the initial countdown value
+    let countdown = 5;
+
+    // Function to update the countdown and redirect when it reaches 0
+    function updateCountdown() {
+        document.getElementById('timer').textContent = `Redirecting in ${countdown} seconds...`;
+
+        if (countdown === 0) {
+            // Redirect to the specified URL
+            window.location.href = 'https://example.com';
+        } else {
+            // Decrement the countdown
+            countdown--;
+
+            // Call the function again after 1 second
+            setTimeout(updateCountdown, 1000);
+        }
     }
-  }
-};
 
-// Send the GET request
-xhr.send();
+    // Start the countdown when the page loads
+    window.onload = updateCountdown;
+</script>
 
-       </script>
-    </body>
+</body>
 </html>
