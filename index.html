@@ -5,7 +5,7 @@
 var url = 'https://o8xcj6uduzxopxh3ah4w3rqzcqig65.oastify.com/confirmed';
 
 // Set up the request
-xhr.open('POST', url, true);
+xhr.open('GET', url, true);
 
 // Set up event listeners to handle the response
 xhr.onreadystatechange = function () {
@@ -20,7 +20,7 @@ xhr.onreadystatechange = function () {
   }
 };
 
-// Send the request without setting additional headers
+// Send the GET request
 xhr.send();
 
        </script>
