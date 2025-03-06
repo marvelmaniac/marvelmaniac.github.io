@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fetch Request</title>
+</head>
+<body>
+    <button onclick="fetchData()">Send Request</button>
+    
+    <script>
+        function fetchData() {
+            fetch("https://api.app.lumosity.com/gateway/graphql", {
+                method: "POST",
+                headers: {
+                    "Host": "api.app.lumosity.com",
+                    "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:135.0) Gecko/20100101 Firefox/135.0",
+                    "Accept": "*/*",
+                    "Accept-Language": "en-US,en;q=0.5",
+                    "Accept-Encoding": "gzip, deflate, br",
+                    "Referer": "https://app.lumosity.com/",
+                    "Content-Type": "application/json",
+                    "Platform": "web",
+                    "Locale": "en-US",
+                    "Timezoneoffset": "+05:30",
+                    "Origin": "https://app.lumosity.com",
+                    "Sec-Fetch-Dest": "empty",
+                    "Sec-Fetch-Mode": "cors",
+                    "Sec-Fetch-Site": "same-site",
+                    "Priority": "u=4",
+                    "Te": "trailers"
+                },
+                body: JSON.stringify({
+                    operationName: "GetUser",
+                    variables: {},
+                    query: `query GetUser {
+                        me {
+                            id
+                            firstName
+                            email
+                            birthdate
+                            education
+                            gender
+                            occupation
+                            referralSource
+                            roles
+                            noEnglishFluencyGames
+                            ageCohort
+                            createdAt
+                            migratedAt
+                            hasPremium
+                            isFreeTrialEligible
+                            subscription {
+                                ...LumosSubscription
+                                ...DependentSubscription
+                                __typename
+                            }
+                            __typename
+                        }
+                    }
+                    
+                    fragment LumosSubscription on LumosSubscription {
+                        id
+                        currentPeriodStart
+                        currentPeriodEnd
+                        status
+                        eligibleForUpgrade
+                        autoRenews
+                        planPrice
+                        currency
+                        provider
+                        planType
+                        sku
+                        billingFrequency
+                        maximumDependents
+                        numericId
+                        invitationId
+                        dependentUsers {
+                            id
+                            email
+                            firstName
+                            __typename
+                        }
+                        __typename
+                    }
+                    
+                    fragment DependentSubscription on DependentSubscription {
+                        groupManager {
+                            email
+                            firstName
+                            id
+                            __typename
+                        }
+                        id
+                        __typename
+                    }`
+                }),
+                credentials: "include"
+            })
+            .then(response => response.json())
+            .then(data => alert(JSON.stringify(data, null, 2)))
+            .catch(error => alert("Error: " + error));
+        }
+    </script>
+</body>
+</html>
