@@ -13,6 +13,7 @@
             fetch("https://api.app.lumosity.com/gateway/graphql", {
                 method: "POST",
                 headers: {
+                    "Platform": "web",
                     "Content-Type": "application/json"
                 },
                 body: JSON.stringify({
